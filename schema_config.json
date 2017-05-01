@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "https://github.com/landrews33/asteriskmqtt/config.json",
+  "properties": {
+    "asterisk": {
+      "id": "/properties/asterisk",
+      "properties": {
+        "host": {
+          "id": "/properties/asterisk/properties/host",
+          "type": "string"
+        },
+        "password": {
+          "id": "/properties/asterisk/properties/password",
+          "type": "string"
+        },
+        "port": {
+          "id": "/properties/asterisk/properties/port",
+          "type": "string"
+        },
+        "singleeventpercall": {
+          "id": "/properties/asterisk/properties/singleeventpercall",
+          "type": "boolean"
+        },
+        "user": {
+          "id": "/properties/asterisk/properties/user",
+          "type": "string"
+        }
+      },
+      "required": [
+        "host",
+        "password",
+        "port",
+        "singleeventpercall",
+        "user"
+      ],
+      "type": "object"
+    },
+    "lines": {
+      "id": "/properties/lines",
+      "items": {
+        "id": "/properties/lines/items",
+        "properties": {
+          "callerid": {
+            "id": "/properties/lines/items/properties/callerid",
+            "type": "string"
+          },
+          "candial": {
+            "default": false,
+            "id": "/properties/lines/items/properties/candial",
+            "type": "boolean"
+          },
+          "command_topic": {
+            "id": "/properties/lines/items/properties/command_topic",
+            "type": "string"
+          },
+          "id": {
+            "id": "/properties/lines/items/properties/id",
+            "type": "string"
+          },
+          "internal": {
+            "default": false,
+            "id": "/properties/lines/items/properties/internal",
+            "type": "boolean"
+          },
+          "status_topic": {
+            "id": "/properties/lines/items/properties/status_topic",
+            "type": "string"
+          }
+        },
+        "required": [
+          "callerid",
+          "status_topic",
+          "command_topic",
+          "id"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "mqtt": {
+      "id": "/properties/mqtt",
+      "properties": {
+        "password": {
+          "id": "/properties/mqtt/properties/password",
+          "type": "string"
+        },
+        "url": {
+          "id": "/properties/mqtt/properties/url",
+          "type": "string"
+        },
+        "username": {
+          "id": "/properties/mqtt/properties/username",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "username",
+        "password"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "lines",
+    "mqtt",
+    "asterisk"
+  ],
+  "type": "object"
+}
+

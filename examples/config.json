@@ -1,0 +1,23 @@
+{
+"asterisk":{
+	"host":"myasteriskserver.mydomain",
+	"port":"5038",
+	"user":"asteriskuser",
+	"password":"asteriskuserpasswd",
+	"singleeventpercall":true
+	},
+"mqtt":{
+	
+	"url":"mqtts://mybroker:1883", 
+	"username":"mqttusername",
+	"password":"mqttpassword"
+},
+"lines":[{
+	"id":"line1", 
+	"internal":false, 
+	"callerid":"+441234567890", 
+	"candial":false, 
+	"status_topic":"phone/office/line1", 
+	"command_topic":"phone/office/line1/cmd"
+}]
+}
