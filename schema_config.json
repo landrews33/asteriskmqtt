@@ -41,42 +41,59 @@
       "items": {
         "id": "/properties/lines/items",
         "properties": {
-          "callerid": {
-            "id": "/properties/lines/items/properties/callerid",
+          "channel": {
+            "id": "/properties/lines/items/properties/channel",
             "type": "string"
           },
-          "candial": {
-            "default": false,
-            "id": "/properties/lines/items/properties/candial",
-            "type": "boolean"
-          },
-          "command_topic": {
-            "id": "/properties/lines/items/properties/command_topic",
-            "type": "string"
-          },
-          "id": {
-            "id": "/properties/lines/items/properties/id",
-            "type": "string"
+          "dids": {
+            "id": "/properties/lines/items/properties/dids",
+            "items": {
+              "id": "/properties/lines/items/properties/dids/items",
+              "properties": {
+                "candial": {
+                  "id": "/properties/lines/items/properties/dids/items/properties/candial",
+                  "type": "boolean"
+                },
+                "command_topic": {
+                  "id": "/properties/lines/items/properties/dids/items/properties/command_topic",
+                  "type": "string"
+                },
+                "did": {
+                  "id": "/properties/lines/items/properties/dids/items/properties/did",
+                  "type": "string"
+                },
+                "id": {
+                  "id": "/properties/lines/items/properties/dids/items/properties/id",
+                  "type": "string"
+                },
+                "status_topic": {
+                  "id": "/properties/lines/items/properties/dids/items/properties/status_topic",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "did",
+                "command_topic",
+                "status_topic",
+                "candial",
+                "id"
+              ],
+              "type": "object"
+            },
+            "type": "array"
           },
           "internal": {
-            "default": false,
             "id": "/properties/lines/items/properties/internal",
             "type": "boolean"
-          },
-          "status_topic": {
-            "id": "/properties/lines/items/properties/status_topic",
-            "type": "string"
           }
         },
         "required": [
-          "callerid",
-          "status_topic",
-          "command_topic",
-          "id"
+          "internal",
+          "dids",
+          "channel"
         ],
         "type": "object"
       },
-      "minItems": 1,
       "type": "array"
     },
     "mqtt": {
@@ -110,4 +127,3 @@
   ],
   "type": "object"
 }
-

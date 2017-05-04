@@ -13,11 +13,13 @@
 	"password":"mqttpassword"
 },
 "lines":[{
-	"id":"line1", 
 	"internal":false, 
-	"callerid":"+441234567890", 
 	"candial":false, 
-	"status_topic":"phone/office/line1", 
-	"command_topic":"phone/office/line1/cmd"
+	"dids":[{
+		"id":"line1",
+		"did":"+441234567890",
+		"status_topic":"phone/office/line1", 
+		"command_topic":"phone/office/line1/cmd"
+	}]
 }]
 }
