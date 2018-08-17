@@ -66,7 +66,7 @@ function Device(app_deps, device)
 	this.io = new Gpio(this.config.gpio, 'out');
 
 	deps.consoleLog.info(this.type);
-	deps.mqtt.registerAdapter(this.type, this.name, device);
+	deps.mqtt.registerAdapter(this.type, this.name, this);
 
 	
 }
