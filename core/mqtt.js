@@ -63,24 +63,24 @@ exports.setup = function setup(app_deps, app_config)
 //COnfig needs to be provided containing global_cmd, global_listener, state_provider, discovery_config, cmd_handler
 //If global_cmd is true we will also subscribe to globalprefix / type / cmd
 //If global_listener is true will mqtt messages will be sent including local.
-exports.registerAdapter = function(type, name, adapter_config)
+exports.registerAdapter = function(type, name, device)
 {
 
 	if(!devices[type])
 		{
 		devices[type] = {};
 		}
-	devices[type][name] = adapter_config;
+	devices[type][name] = device;
 
 	if(mqttClient.connected)
 	{
-		if(!global_listener && adapter_config.global_listener)
+		if(!global_listener && device.global_listener)
 		{
 			global_listener = true;
 			mqttClient.subscribe(global_prefix + '/#');
 			
 		}
-		if(!global_listener && adapter_config.global_cmd && !global_command_types[type])
+		if(!global_listener && device.global_cmd && !global_command_types[type])
 		{
 			mqttClient.subscribe(global_prefix + '/' + type + '/#');
 		}
@@ -88,8 +88,8 @@ exports.registerAdapter = function(type, name, adapter_config)
 		{
 			mqttClient.subscribe(global_prefix + '/' + type + '/' + name + '/cmd')
 		}
-		publishDiscovery(type, name, adapter_config);
-		publishState(type, name, adapter_config.state_provider);
+		publishDiscovery(type, name, device);
+		publishState(type, name, device);
 	}
 }
 
@@ -112,11 +112,11 @@ function subscribeAndPublishAll()
 			{
 				mqttClient.subscribe(config.global_prefix + '/' + type + '/#');
 			}
-			_.forOwn(value, function (value, name, object)
+			_.forOwn(value, function (device, name, object)
 			{
-					publishDiscovery(type, name, value);
-					console.log(value);
-					publishState(type, name, value.state_provider);
+					publishDiscovery(type, name, device);
+					console.log(device);
+					publishState(type, name, device);
 					if(!global_listener)
 					{
 						mqttClient.subscribe(config.global_prefix + '/' + type + '/' + name + '/cmd')
@@ -152,10 +152,10 @@ function publishDiscovery(type, name, device)
 		mqttClient.publish(config.global_prefix + '/' + type + '/' + name +'/config', JSON.stringify(device.discovery_config));
 }
 
-function publishState(type, name, state_provider)
+function publishState(type, name, device)
 {
 		mqttLog.info('Publishing to ' + type + '/' + name + '/state');
-		mqttClient.publish(config.global_prefix + '/' + type + '/' + name +'/state', state_provider());
+		mqttClient.publish(config.global_prefix + '/' + type + '/' + name +'/state', device.state_provider());
 }
 
 function messageHandler(topic, message)
