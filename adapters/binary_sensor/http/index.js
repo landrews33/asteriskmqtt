@@ -24,7 +24,7 @@ Device.prototype.requestHandler = function(request, response)
 			if(this.config.always_on)
 			{
 				this.state=true;
-				mqtt.publishState(this.type, this.name, device);
+				deps.mqtt.publishState(this.type, this.name, device);
 				if(device.config.expiry)
 					{
 						clearTimeout(this.expiry);
