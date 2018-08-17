@@ -34,7 +34,7 @@ Device.prototype.returnRequestHandler = function ()
                                                 clearTimeout(mydevice.expiry);
                                                 mydevice.expiry = setTimeout(function() {
                                                         mydevice.state=false;
-                                                        deps.consoleLog.info("Autoexpiring sensor" + mydevices.name);
+                                                        deps.consoleLog.info("Autoexpiring sensor" + mydevice.name);
                                                         deps.mqtt.publishState(mydevice.type, mydevice.name, mydevice)
                                                         }, mydevice.config.expiry);
                                         }
