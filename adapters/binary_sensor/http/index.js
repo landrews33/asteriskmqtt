@@ -29,7 +29,7 @@ Device.prototype.returnRequestHandler = function ()
                         {
                                 mydevice.state=true;
                                 deps.mqtt.publishState(mydevice.type, mydevice.name, mydevice);
-                                if(device.config.expiry)
+                                if(mydevice.config.expiry)
                                         {
                                                 clearTimeout(mydevice.expiry);
                                                 mydevice.expiry = setTimeout(function() {
