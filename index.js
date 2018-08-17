@@ -25,21 +25,7 @@ try {
 var deps = {};
 var devices = {};
 
-deps.configgen = function(type, friendly_name, unit, value_template)
-{
-	var device_config = {};
-	//device_config.device_class = type;
-	device_config.name = friendly_name;
-	if(unit)
-	{
-		device_config.unit_of_measurement = unit;
-	}
-	if(value_template)
-	{
-		device_config.value_template = value_template;
-	}
-	return JSON.stringify(device_config);
-}
+
 deps.logger = require('./core/logging');
 deps.logger.setup(deps, config);
 

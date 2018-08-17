@@ -35,6 +35,8 @@ function registerMQTTEventHandlers(mqttClient) {
 	});
 
 	mqttClient.on('connect', subscribeAndPublishAll);
+	
+	mqttClient.on('message', messageHandler)
 
 	setInterval(publishDiscoveryAll, 1800000);
 	
@@ -86,7 +88,7 @@ exports.registerAdapter = function(type, name, adapter_config)
 		{
 			mqttClient.subscribe(global_prefix + '/' + type + '/' + name + '/cmd')
 		}
-		publishDiscovery(type, name, adapter_config.discovery_config);
+		publishDiscovery(type, name, adapter_config);
 		publishState(type, name, adapter_config.state_provider);
 	}
 }
@@ -112,7 +114,7 @@ function subscribeAndPublishAll()
 			}
 			_.forOwn(value, function (value, name, object)
 			{
-					publishDiscovery(type, name, value.discovery_config);
+					publishDiscovery(type, name, value);
 					console.log(value);
 					publishState(type, name, value.state_provider);
 					if(!global_listener)
@@ -133,17 +135,21 @@ function publishDiscoveryAll()
 			_.forOwn(value, function (value, key, object)
 			{
 					console.log(value);
-					publishDiscovery(top_key, key, value.discovery_config);
+					publishDiscovery(top_key, key, value);
 			})
 		});
 	}
 }
 
-function publishDiscovery(type, name, discovery_config)
+function publishDiscovery(type, name, device)
 {
-		console.log(devices);
+		console.log(config);
 		mqttLog.info('Publishing to ' + type + '/' + name + '/config');
-		mqttClient.publish(config.global_prefix + '/' + type + '/' + name +'/config', discovery_config);
+		if(device.cmd_handler)
+		{
+			device.discovery_config['command_topic'] = config.global_prefix + '/' + type + '/' + name +'/cmd';
+		}
+		mqttClient.publish(config.global_prefix + '/' + type + '/' + name +'/config', JSON.stringify(device.discovery_config));
 }
 
 function publishState(type, name, state_provider)

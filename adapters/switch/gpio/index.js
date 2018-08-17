@@ -54,7 +54,7 @@ function Device(app_deps, device)
 		deps=app_deps;
 	}
 	this.device=device;
-	this.device.discovery_config=app_deps.configgen(this.device.type, this.device.friendly_name);
+	this.device.discovery_config={"name":this.device.friendly_name};
 	this.device.state_provider=this.state_provider;
 	this.filter=standardFilter;
 	this.io = new Gpio(this.device.config.gpio, 'out');
@@ -62,10 +62,6 @@ function Device(app_deps, device)
 
 	deps.consoleLog.info(this.device.type);
 	deps.mqtt.registerAdapter(this.device.type, this.device.name, this.device);
-	//Enable port reuse!
-	
-	console.log(this.device.config.path);
-	routers[this.device.config.port].get(this.device.config.path,requestHandler(this.device, deps.mqtt));
 
 	
 }
