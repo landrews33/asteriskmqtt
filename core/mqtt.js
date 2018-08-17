@@ -93,10 +93,14 @@ exports.registerAdapter = function(type, name, device)
 	}
 }
 
-exports.publishState = function(type, name, message)
+var publishState = function(type, name, device)
 {
-	mqttClient.publish(config.global_prefix + '/' + type + '/' + name +'/state', message);
+		mqttLog.info('Publishing to ' + type + '/' + name + '/state');
+		mqttClient.publish(config.global_prefix + '/' + type + '/' + name +'/state', device.state_provider());
 }
+
+
+exports.publishState = publishState;
 
 function subscribeAndPublishAll()
 {
@@ -152,11 +156,6 @@ function publishDiscovery(type, name, device)
 		mqttClient.publish(config.global_prefix + '/' + type + '/' + name +'/config', JSON.stringify(device.discovery_config));
 }
 
-function publishState(type, name, device)
-{
-		mqttLog.info('Publishing to ' + type + '/' + name + '/state');
-		mqttClient.publish(config.global_prefix + '/' + type + '/' + name +'/state', device.state_provider());
-}
 
 function messageHandler(topic, message)
 {
