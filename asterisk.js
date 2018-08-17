@@ -2,26 +2,16 @@ var config = require('./config.json');
 var config_schema = require('./schema_config.json');
 var winston = require('winston');
 var phone_mqtt = require('./phone_mqtt/');
-var consoleLog = new (winston.Logger)({
-	transports : [ new (winston.transports.Console)(),
-			new (winston.transports.File)({
-				filename : 'asteriskmqtt.log',
-				maxsize : 1048576,
-				maxFiles : 10,
-				tailable : true,
-				zippedArchive : true
-			}) ]
-});
 
-var asteriskLog = new (winston.Logger)({
-	transports : [ new (winston.transports.File)({
-		filename : 'asterisk.log',
-		maxsize : 1048576,
-		maxFiles : 10,
-		tailable : true,
-		zippedArchive : true
-	}) ]
-});
+var deps = {};
+
+deps.logger = require('core/logging');
+deps.logger.setup(config);
+
+deps.consoleLog = logger.createLog('mqtthub');
+
+
+var asteriskLog = logger.createLog('asterisk');
 var ami = {};
 
 var channelTracker = {};

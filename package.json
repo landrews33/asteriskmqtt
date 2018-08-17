@@ -12,6 +12,8 @@
     "jsonschema": "*",
     "winston": "*",
     "dav": "*",
-    "vcf": "*"
+    "vcf": "*",
+    "node-simple-router": "*",
+    "onoff": "*"
   }
 }
