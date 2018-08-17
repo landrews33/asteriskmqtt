@@ -59,7 +59,8 @@ function Device(app_deps, device)
 	this.type=device.type;
 	this.name = device.name;
 	this.config = device.config;
-	this.discovery_config={"name":this.device.friendly_name};
+	this.friendly_name = device.friendly_name;
+	this.discovery_config={"name":this.friendly_name};
 	//In future this will be overridden;
 	this.filter=standardFilter;
 	this.io = new Gpio(this.config.gpio, 'out');
