@@ -17,7 +17,7 @@ exports.create_device = function(app_deps, device_config)
 Device.prototype.cmd_handler = function(message)
 {
 	var filteredMessage = this.filter(message);
-	if(filteredMessage)
+	if(filteredMessage != null)
 	{
 		this.state = filteredMessage;
 		this.io.writeSync(this.state ? Gpio.HIGH : Gpio.LOW);
