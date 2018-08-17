@@ -17,27 +17,30 @@ exports.create_device = function(app_deps, device_config)
 	return new Device(app_deps, device_config);
 }
 
-Device.prototype.requestHandler = function(request, response)
-	{
-		httpLog.info(request.path + ":" + request.params);
-			response.end("OK");
-			if(this.config.always_on)
-			{
-				this.state=true;
-				deps.mqtt.publishState(this.type, this.name, device);
-				if(device.config.expiry)
-					{
-						clearTimeout(this.expiry);
-						this.expiry = setTimeout(function() { 
-							this.state=false;
-							deps.consoleLog.info("Autoexpiring sensor" + this.name);
-							deps.mqtt.publishState(this.type, this.name, device)
-							}, this.config.expiry);
-					}
-			}
-	}
-
-
+Device.prototype.returnRequestHandler = function () 
+{ 
+        mydevice = this;
+        return function(request, response)
+        {
+                console.log(mydevice);
+                httpLog.info(request.path + ":" + request.params);
+                        response.end("OK");
+                        if(mydevice.config.always_on)
+                        {
+                                mydevice.state=true;
+                                deps.mqtt.publishState(mydevice.type, mydevice.name, device);
+                                if(device.config.expiry)
+                                        {
+                                                clearTimeout(mydevice.expiry);
+                                                mydevice.expiry = setTimeout(function() {
+                                                        mydevice.state=false;
+                                                        deps.consoleLog.info("Autoexpiring sensor" + mydevices.name);
+                                                        deps.mqtt.publishState(mydevice.type, mydevice.name, device)
+                                                        }, mydevice.config.expiry);
+                                        }
+                        }
+        }
+}
 
 function Device(app_deps, device)
 {
@@ -68,7 +71,7 @@ function Device(app_deps, device)
 				})
 	}
 	console.log(this.config.path);
-	routers[this.config.port].get(this.config.path,this.requestHandler);
+	routers[this.config.port].get(this.config.path,this.returnRequestHandler());
 
 	
 }
