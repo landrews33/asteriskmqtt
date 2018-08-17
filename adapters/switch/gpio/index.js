@@ -21,7 +21,7 @@ Device.prototype.cmd_handler = function(message)
 	{
 		this.state = filteredMessage;
 		this.io.writeSync(this.state ? Gpio.HIGH : Gpio.LOW);
-		deps.mqtt.publishState(this.device.type, this.device.name, this);	
+		deps.mqtt.publishState(this.type, this.name, this);	
 	}	
 	else
         {
