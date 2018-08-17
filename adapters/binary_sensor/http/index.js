@@ -28,14 +28,14 @@ Device.prototype.returnRequestHandler = function ()
                         if(mydevice.config.always_on)
                         {
                                 mydevice.state=true;
-                                deps.mqtt.publishState(mydevice.type, mydevice.name, device);
+                                deps.mqtt.publishState(mydevice.type, mydevice.name, mydevice);
                                 if(device.config.expiry)
                                         {
                                                 clearTimeout(mydevice.expiry);
                                                 mydevice.expiry = setTimeout(function() {
                                                         mydevice.state=false;
                                                         deps.consoleLog.info("Autoexpiring sensor" + mydevices.name);
-                                                        deps.mqtt.publishState(mydevice.type, mydevice.name, device)
+                                                        deps.mqtt.publishState(mydevice.type, mydevice.name, mydevice)
                                                         }, mydevice.config.expiry);
                                         }
                         }
