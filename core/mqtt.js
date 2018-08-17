@@ -173,9 +173,9 @@ function messageHandler(topic, message)
 				}
 				if(devices[components[1]][components[2]] && components[3] == "cmd")
 					{
-						if(typeof(devices[components[1]][components[2]].config.cmd_handler) == 'function')
+						if(typeof(devices[components[1]][components[2]].cmd_handler) == 'function')
 							{
-								devices[components[1]][components[2]].config.cmd_handler(message);
+								devices[components[1]][components[2]].cmd_handler(message);
 							}
 					}
 			}
